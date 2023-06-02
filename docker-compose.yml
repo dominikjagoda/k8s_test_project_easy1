@@ -2,6 +2,7 @@ version: '3'
 services:
   db:
     image: postgres
+    container_name: postgres_k8s
     restart: always
     environment:
       POSTGRES_DB: app_db
@@ -9,5 +10,9 @@ services:
       POSTGRES_PASSWORD: domino
     ports:
       - '5432:5432'
-    volumes:
-      - ./data:/var/lib/postgresql/data
+
+  app:
+    image: djagoda881/cat-facts
+    container_name: app_1
+    environment:
+      - POSTGRES_HOST=postgres_k8s
